@@ -1,15 +1,27 @@
-﻿namespace UCEventTracker
+﻿using UCEventTracker.ViewModels;
+
+namespace UCEventTracker
 {
     public partial class MainPage : ContentPage
     {
-        public MainPage()
+        public MainPage(MainPageViewModel viewModel)
         {
             InitializeComponent();
+            BindingContext = viewModel;
+            this.viewModel = viewModel;
+        }
+
+        private readonly MainPageViewModel viewModel;
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            viewModel.LoadEventsCommand.Execute(this);
         }
 
         private async void OnAddClicked(object sender, EventArgs e)
         {
-            await DisplayAlert("Add", "Add Event Clicked!", "OK");
+            await Navigation.PushAsync(new NewEventPage());
         }
     }
 
