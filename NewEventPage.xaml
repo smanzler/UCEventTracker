@@ -1,26 +1,20 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:UCEventTracker.ViewModels"
              x:Class="UCEventTracker.NewEventPage"
+             x:DataType="viewmodels:NewEventViewModel"
              Title="New Event">
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
-            <Label Text="Title" />
-            <Entry x:Name="TitleEntry" Placeholder="Event title" />
-
-            <Label Text="Description" />
-            <Editor x:Name="DescriptionEditor" Placeholder="Details..." AutoSize="TextChanges" />
-
-            <Label Text="Date" />
-            <DatePicker x:Name="DatePicker" />
-
-            <CheckBox x:Name="IsImportantCheck" />
-            <Label Text="Mark as Important" />
-
-            <CheckBox x:Name="IsPersonalCheck" />
-            <Label Text="This is a Personal Event" />
-
-            <Button Text="Save Event" Clicked="OnSaveClicked" />
+            <Entry Placeholder="Title" Text="{Binding Title}" />
+            <Editor Placeholder="Description" Text="{Binding Description}" />
+            <DatePicker Date="{Binding Date}" />
+            <CheckBox IsChecked="{Binding IsImportant}" />
+            <Label Text="Important" />
+            <CheckBox IsChecked="{Binding IsPersonal}" />
+            <Label Text="Personal" />
+            <Button Text="Save" Command="{Binding SaveEventCommand}" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

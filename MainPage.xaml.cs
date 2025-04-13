@@ -4,24 +4,25 @@ namespace UCEventTracker
 {
     public partial class MainPage : ContentPage
     {
+        private readonly MainPageViewModel viewModel;
+
         public MainPage(MainPageViewModel viewModel)
         {
             InitializeComponent();
-            BindingContext = viewModel;
             this.viewModel = viewModel;
+            BindingContext = viewModel;
         }
 
-        private readonly MainPageViewModel viewModel;
-
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
-            viewModel.LoadEventsCommand.Execute(null);
+            if (!viewModel.LoadEventsCommand.IsRunning)
+                await viewModel.LoadEventsCommand.ExecuteAsync(null);
         }
 
         private async void OnAddClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new NewEventPage());
+            await Shell.Current.GoToAsync(nameof(NewEventPage));
         }
     }
 
