@@ -1,36 +1,36 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
 using UCEventTracker.Models;
-using UCEventTracker.Services;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
-namespace UCEventTracker.ViewModels
+namespace UCEventTracker.ViewModels;
+
+public partial class MainPageViewModel : ObservableObject
 {
-    public class MainPageViewModel : BaseViewModel
+    [ObservableProperty]
+    private ObservableCollection<Event> events = new();
+
+    public MainPageViewModel()
     {
-        public ObservableCollection<Event> Events { get; set; } = new();
+        LoadEventsCommand = new AsyncRelayCommand(LoadEventsAsync);
+        ToggleCompletedCommand = new AsyncRelayCommand<Event>(ToggleCompletedAsync);
+    }
 
-        public ICommand LoadEventsCommand { get; }
-        public ICommand ToggleCompletedCommand { get; }
+    public IAsyncRelayCommand LoadEventsCommand { get; }
+    public IAsyncRelayCommand<Event> ToggleCompletedCommand { get; }
 
-        public MainPageViewModel()
-        {
-            LoadEventsCommand = new Command(async () => await LoadEventsAsync());
-            ToggleCompletedCommand = new Command<Event>(async (evt) => await ToggleCompletedAsync(evt));
-        }
+    private async Task LoadEventsAsync()
+    {
+        Events.Clear();
+        var eventsFromDb = await App.Database.GetEventsAsync();
+        foreach (var ev in eventsFromDb.OrderBy(e => e.Date))
+            Events.Add(ev);
+    }
 
-        private async Task LoadEventsAsync()
-        {
-            Events.Clear();
-            var eventsFromDb = await App.Database.GetEventsAsync();
-            foreach (var ev in eventsFromDb.OrderBy(e => e.Date))
-                Events.Add(ev);
-        }
-
-        private async Task ToggleCompletedAsync(Event evt)
-        {
-            evt.IsCompleted = !evt.IsCompleted;
-            await App.Database.SaveEventAsync(evt);
-            await LoadEventsAsync();
-        }
+    private async Task ToggleCompletedAsync(Event evt)
+    {
+        evt.IsCompleted = !evt.IsCompleted;
+        await App.Database.SaveEventAsync(evt);
+        await LoadEventsAsync();
     }
 }

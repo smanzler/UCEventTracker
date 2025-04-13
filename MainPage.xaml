@@ -9,10 +9,6 @@
         <ToolbarItem Text="Add" Clicked="OnAddClicked" />
     </ContentPage.ToolbarItems>
 
-    <ContentPage.BindingContext>
-        <viewmodels:MainPageViewModel />
-    </ContentPage.BindingContext>
-
     <RefreshView Command="{Binding LoadEventsCommand}" IsRefreshing="False">
         <CollectionView ItemsSource="{Binding Events}">
             <CollectionView.ItemTemplate>

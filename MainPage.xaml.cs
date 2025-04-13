@@ -16,7 +16,7 @@ namespace UCEventTracker
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            viewModel.LoadEventsCommand.Execute(this);
+            viewModel.LoadEventsCommand.Execute(null);
         }
 
         private async void OnAddClicked(object sender, EventArgs e)
