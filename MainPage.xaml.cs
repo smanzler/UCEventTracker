@@ -16,8 +16,11 @@ namespace UCEventTracker
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+
             if (!viewModel.LoadEventsCommand.IsRunning)
+            {
                 await viewModel.LoadEventsCommand.ExecuteAsync(null);
+            }
         }
 
         private async void OnAddClicked(object sender, EventArgs e)
@@ -25,5 +28,4 @@ namespace UCEventTracker
             await Shell.Current.GoToAsync(nameof(NewEventPage));
         }
     }
-
 }

@@ -17,7 +17,7 @@ namespace UCEventTracker.ViewModels
 
         public NewEventViewModel(EventDatabase database)
         {
-            _database = database; 
+            _database = database;
         }
 
         [RelayCommand]
@@ -47,4 +47,3 @@ namespace UCEventTracker.ViewModels
         }
     }
 }
-
