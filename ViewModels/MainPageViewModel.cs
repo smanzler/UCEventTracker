@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using UCEventTracker.Models;
 using UCEventTracker.Services;
 
@@ -51,8 +52,10 @@ public partial class MainPageViewModel : ObservableObject
         await LoadEventsAsync();
     }
 
-    public void LoadCalendar()
+    public async void LoadCalendar()
     {
+        await LoadEventsAsync();
+
         CalendarDays.Clear();
 
         var today = DateTime.Today;

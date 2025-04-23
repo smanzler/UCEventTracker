@@ -2,7 +2,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:UCEventTracker.ViewModels"
              x:Class="UCEventTracker.NewEventPage"
-             x:DataType="viewmodels:NewEventViewModel"
              Title="New Event">
 
     <ScrollView>

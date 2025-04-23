@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Diagnostics;
 using UCEventTracker.Models;
 using UCEventTracker.Services;
 
@@ -41,7 +42,7 @@ namespace UCEventTracker.ViewModels
 
             await _database.SaveEventAsync(newEvent);
 
-            Console.WriteLine($"Event saved: {newEvent.Title}, {newEvent.Description}");
+            Debug.WriteLine($"Event saved: {newEvent.Title}, {newEvent.Description}");
 
             await Shell.Current.Navigation.PopAsync();
         }

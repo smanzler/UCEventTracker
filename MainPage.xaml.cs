@@ -17,10 +17,7 @@ namespace UCEventTracker
         {
             base.OnAppearing();
 
-            if (!viewModel.LoadEventsCommand.IsRunning)
-            {
-                await viewModel.LoadEventsCommand.ExecuteAsync(null);
-            }
+             await viewModel.LoadEventsCommand.ExecuteAsync(null);
         }
 
         private async void OnAddClicked(object sender, EventArgs e)
