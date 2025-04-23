@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
-using UCEventTracker.Services;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using UCEventTracker.ViewModels;
 
 namespace UCEventTracker
@@ -17,13 +17,14 @@ namespace UCEventTracker
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "uc_events.db");
-            builder.Services.AddSingleton(new EventDatabase(dbPath));
-
-            builder.Services.AddTransient<MainPageViewModel>();
-            builder.Services.AddTransient<MainPage>();
-            builder.Services.AddTransient<NewEventViewModel>();
+            builder.Services.AddSingleton<MainPageViewModel>();
+            builder.Services.AddSingleton<MainPage>();
             builder.Services.AddTransient<NewEventPage>();
+            builder.Services.AddTransient<NewEventViewModel>(sp =>
+            {
+                var mainViewModel = sp.GetRequiredService<MainPageViewModel>();
+                return new NewEventViewModel(mainViewModel);
+            });
 
 
 #if DEBUG

@@ -1,16 +1,15 @@
-﻿using UCEventTracker.Services;
-
-namespace UCEventTracker
+﻿namespace UCEventTracker
 {
     public partial class App : Application
     {
-        public static IServiceProvider Services { get; private set; }
-
-        public App(IServiceProvider services)
+        public App()
         {
             InitializeComponent();
-            Services = services;
-            MainPage = new AppShell();
+        }
+
+        protected override Window CreateWindow(IActivationState? activationState)
+        {
+            return new Window(new AppShell());
         }
     }
 }
