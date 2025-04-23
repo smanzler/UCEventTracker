@@ -41,7 +41,6 @@ namespace UCEventTracker.ViewModels
 
             await _database.SaveEventAsync(newEvent);
 
-            Console.WriteLine("Saving event...");
             Console.WriteLine($"Event saved: {newEvent.Title}, {newEvent.Description}");
 
             await Shell.Current.Navigation.PopAsync();
