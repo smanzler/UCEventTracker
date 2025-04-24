@@ -34,15 +34,18 @@ public partial class MainPageViewModel : ObservableObject
     private async Task LoadEventsAsync()
     {
         var eventsFromDb = await _database.GetEventsAsync();
-        Events.Clear();
 
         foreach (var ev in eventsFromDb.OrderBy(e => e.Date))
         {
-
             Events.Add(ev);
 
-        }
+            if (ev.IsImportant && !ev.IsCompleted)
+            {
+                ImportantTasks.Add(ev);
+            }
 
+            Debug.WriteLine($"Event Loaded: {ev.Title}, Important: {ev.IsImportant}, Completed: {ev.IsCompleted}");
+        }
     }
 
     private async Task ToggleCompletedAsync(Event evt)
@@ -83,5 +86,4 @@ public partial class MainPageViewModel : ObservableObject
             CalendarDays.Add(dayView);
         }
     }
-
 }
