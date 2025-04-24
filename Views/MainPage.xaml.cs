@@ -1,4 +1,5 @@
-﻿using UCEventTracker.ViewModels;
+﻿using System.Diagnostics;
+using UCEventTracker.ViewModels;
 
 namespace UCEventTracker
 {
@@ -11,6 +12,13 @@ namespace UCEventTracker
             InitializeComponent();
             this.viewModel = viewModel;
             BindingContext = viewModel;
+        }
+
+        protected override async void OnAppearing()
+        {
+            Debug.WriteLine("MainPage OnAppearing called");
+            base.OnAppearing();
+            await viewModel.LoadCalendar(); 
         }
 
         private async void OnAddClicked(object sender, EventArgs e)

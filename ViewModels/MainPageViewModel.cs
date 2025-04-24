@@ -117,7 +117,11 @@ public partial class MainPageViewModel : ObservableObject
 
         await _database.SaveEventAsync(newEvent);
 
-        await LoadCalendar();
+        Title = string.Empty;
+        Description = string.Empty;
+        Date = DateTime.Today;
+        IsImportant = false;
+        IsPersonal = false;
 
         Debug.WriteLine($"Event saved: {newEvent.Title}, {newEvent.Description}");
 
