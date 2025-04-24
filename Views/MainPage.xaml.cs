@@ -13,13 +13,6 @@ namespace UCEventTracker
             BindingContext = viewModel;
         }
 
-        protected override async void OnAppearing()
-        {
-            base.OnAppearing();
-
-             await viewModel.LoadEventsCommand.ExecuteAsync(null);
-        }
-
         private async void OnAddClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync(nameof(NewEventPage));

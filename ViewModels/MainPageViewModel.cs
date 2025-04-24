@@ -4,11 +4,18 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using UCEventTracker.Models;
 using UCEventTracker.Services;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace UCEventTracker.ViewModels;
 
 public partial class MainPageViewModel : ObservableObject
 {
+    [ObservableProperty] private string title;
+    [ObservableProperty] private string description;
+    [ObservableProperty] private DateTime date = DateTime.Today;
+    [ObservableProperty] private bool isImportant;
+    [ObservableProperty] private bool isPersonal;
+
     [ObservableProperty]
     private ObservableCollection<Event> events = new();
 
@@ -34,6 +41,8 @@ public partial class MainPageViewModel : ObservableObject
     private async Task LoadEventsAsync()
     {
         var eventsFromDb = await _database.GetEventsAsync();
+        Events.Clear();
+        ImportantTasks.Clear();
 
         foreach (var ev in eventsFromDb.OrderBy(e => e.Date))
         {
@@ -55,7 +64,7 @@ public partial class MainPageViewModel : ObservableObject
         await LoadEventsAsync();
     }
 
-    public async void LoadCalendar()
+    public async Task LoadCalendar()
     {
         await LoadEventsAsync();
 
@@ -85,5 +94,33 @@ public partial class MainPageViewModel : ObservableObject
 
             CalendarDays.Add(dayView);
         }
+    }
+
+    [RelayCommand]
+    private async Task SaveEvent()
+    {
+        if (string.IsNullOrWhiteSpace(Title))
+        {
+            await Shell.Current.DisplayAlert("Error", "Please enter a title.", "OK");
+            return;
+        }
+
+        var newEvent = new Event
+        {
+            Title = Title,
+            Description = Description,
+            Date = Date,
+            IsImportant = IsImportant,
+            IsPersonal = IsPersonal,
+            IsCompleted = false
+        };
+
+        await _database.SaveEventAsync(newEvent);
+
+        await LoadCalendar();
+
+        Debug.WriteLine($"Event saved: {newEvent.Title}, {newEvent.Description}");
+
+        await Shell.Current.Navigation.PopAsync();
     }
 }

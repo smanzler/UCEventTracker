@@ -5,7 +5,7 @@ namespace UCEventTracker;
 
 public partial class NewEventPage : ContentPage
 {
-    public NewEventPage(NewEventViewModel viewModel)
+    public NewEventPage(MainPageViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;
