@@ -2,18 +2,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:UCEventTracker.ViewModels"
              x:Class="UCEventTracker.NewEventPage"
-             Title="New Event">
+             Title="Create New Event">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15">
-            <Entry Placeholder="Title" Text="{Binding Title}" />
-            <Editor Placeholder="Description" Text="{Binding Description}" />
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <Label Text="Event Title" FontAttributes="Bold" />
+            <Entry Placeholder="Enter title" Text="{Binding Title}" />
+
+            <Label Text="Description" FontAttributes="Bold" />
+            <Editor Placeholder="Enter event description" Text="{Binding Description}" HeightRequest="20" />
+
+            <Label Text="Date" FontAttributes="Bold" />
             <DatePicker Date="{Binding Date}" />
-            <CheckBox IsChecked="{Binding IsImportant}" />
-            <Label Text="Important" />
-            <CheckBox IsChecked="{Binding IsPersonal}" />
-            <Label Text="Personal" />
-            <Button Text="Save" Command="{Binding SaveEventCommand}" />
+
+            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                <CheckBox IsChecked="{Binding IsImportant}" />
+                <Label Text="Mark as Important" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                <CheckBox IsChecked="{Binding IsPersonal}" />
+                <Label Text="Mark as Personal" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <Button Text="Save Event"
+                    Command="{Binding SaveEventCommand}"
+                    BackgroundColor="#ff7f7f"
+                    TextColor="White"
+                    CornerRadius="10"
+                    HeightRequest="50" />
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
